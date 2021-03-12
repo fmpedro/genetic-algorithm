@@ -1,0 +1,10 @@
+{
+	"n_gen": 50,
+	"n_pop": 60,
+	"n_keep": 30,
+	"mut_rate": 0.1,
+	"elitismo": True,
+	"selection_method": "ranking",
+	"pairing_method": "adjacent",
+	"mating_method": "athmetical"
+}
