@@ -5,6 +5,6 @@
 	"mut_rate": 0.1,
 	"elitism": True,
 	"selection_method": "ranking",
-	"pairing_method": "adjacent",
+	"pairing_method": "adjacent_fit_pairing",
 	"mating_method": "athmetical"
 }

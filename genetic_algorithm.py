@@ -16,6 +16,7 @@ with open('ga_params.json', 'r') as f:
     ga_params = json.load(f)
 
 #Validate parameter values
+#n_keep must be even
 # -----TBD-----
 
 # Function for selection of elements for next generation
@@ -23,18 +24,18 @@ def selection(pop):
 	spots = ga_params["n_keep"]
 	ranking = pop[:,-1].argsort() # list of indexes sorted by rank
 
-	# Elitism(guarantee that the best element is chosen):
+	# Elitism (guarantee that the best element is chosen):
 	if ga_params["elitism"]: 
 		best = pop[ranking[0],:]
 		pop = np.delete(pop, (ranking[0]), axis=0) # removes best from rest of population
 		spots -= 1
 
 	# Selection Methods:
-	if ga_params["method"] == 'ranking':
+	if ga_params["selection_method"] == 'ranking':
 		chosen = ranking[0:spots] # indexes of the best ones to fill spots
 		selected = pop[chosen,:] # array of the selected elements
 	
-	elif ga_params["method"] == 'roulette_wheel':
+	elif ga_params["selection_method"] == 'roulette_wheel':
 		win_ind = [] # inicialize list of winners
 		total_fit = sum(abs(pop[:,-1])) # sum of fitness values
 		
@@ -52,7 +53,7 @@ def selection(pop):
 		selected = pop[win_ind,:]
 
 
-	elif ga_params["method"] == 'tournament':
+	elif ga_params["selection_method"] == 'tournament':
 		win_ind = [] # inicialize list of winners
 		candidates = [i for i in range(pop.shape[0])] # list of indexes of population
 
@@ -81,9 +82,25 @@ def selection(pop):
 
 
 # Function for pairing elements for the mating process
-def pairing():
-	return
+def pairing(selected):
+	ranking = selected[:,-1].argsort() # list of indexes sorted by rank
 
+	# Pairing Methods:
+	if ga_params["pairing_method"] == 'ranking':
+		paired = selected[ranking,:] #sorts the selected array by rank
+
+	elif ga_params["pairing_method"] == 'best-mate-worst':
+		best = 0
+		worst = -1
+		order = []
+		while len(order) < ga_params["n_keep"]:
+			order.append(ranking[best])
+			order.append(ranking[worst])
+			best += 1
+			worst -= 1
+		paired = selected[order,:]
+
+	return(paired)
 
 # Function generate offsprings from mating of paired elements
 def mating():

@@ -5,8 +5,9 @@
 
 
 ### Pairing Methods:
-- "adjacent" (Adjacent Fitness Pairing);
-- "best-mate-worst".
+- "adjacent_fit_pairing": (Adjacent Fitness Pairing) Pairs individuals according to their fitness, i.e. best with second-best, third-best with fourth-best, etc. This leads to high-score parents being likely to have high-scoring offsprings;
+- "best-mate-worst": Pairs the best individuals with the worst, i.e, the best with the worst, the second-best with the second-worst, etc. This leads to more genetic variety, which is good to avoid that the algorithm gets "trapped" in a local minimum.
+
 
 ### Mating Methods:
 - "artithmetical" (Arithmetical Crossover);
