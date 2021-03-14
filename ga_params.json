@@ -1,10 +1,10 @@
 {
-	"n_gen": 50,
-	"n_pop": 60,
-	"n_keep": 30,
+	"n_gen": 100,
+	"n_pop": 100,
+	"n_keep": 50,
 	"mut_rate": 0.1,
-	"elitism": True,
+	"elitism": true,
 	"selection_method": "ranking",
-	"pairing_method": "adjacent_fit_pairing",
+	"pairing_method": "best-mate-worst",
 	"mating_method": "arithmetical"
 }
