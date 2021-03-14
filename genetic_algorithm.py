@@ -81,6 +81,7 @@ def selection(pop):
 	return(selected)
 
 
+
 # Function for pairing elements for the mating process
 def pairing(selected):
 	ranking = selected[:,-1].argsort() # list of indexes sorted by rank
@@ -101,6 +102,8 @@ def pairing(selected):
 		paired = selected[order,:]
 
 	return(paired)
+
+
 
 # Function generate offsprings from mating of paired elements
 def mating(paired):
@@ -145,10 +148,33 @@ def mating(paired):
 
 
 
-
 # Function to randomly mutate part of the population
-def mutation():
-	return
+def mutation(pop, ranges):
+	n_elems = pop.shape[0] # number of elements in the population
+	n_vars = pop.shape[1]-1 # number of variables
+	n_mutations = round(n_elems * n_vars) #number of mutations to be performed
+	index_best = np.argmin(pop[:,-1]) # index of the best element in the population
+
+	# for each mutation:
+	for mut in range(n_mutations):
+		elem = round(np.random.rand() * n_elems)
+		var = round(np.random.rand() * n_vars)
+
+		#elitism:
+		if ga_params["elitism"] and elem == index_best:
+			continue
+
+		value = pop[elem,var]
+		if isinstance(value, float):
+			pop[elem,var] = (ranges[var][1][1]-ranges[var][1][0]) * np.random.rand() + ranges[var][1][0]
+		else:
+			pop[elem,var] = int(round((ranges[var][1][1]-ranges[var][1][0]) * np.random.rand() + ranges[var][1][0]))
+
+		# calculate new fitness based on mutated values:
+		pop[elem,-1] = fitness_function.main(pop[elem,0],pop[elem,1])
+	
+	return(pop)
+
 
 
 
@@ -194,7 +220,7 @@ def main():
 		new_pop = np.append(parents, offsprings, axis=0)
 
 		#introduce random mutation on the population:
-		pop = mutation(new_pop)
+		pop = mutation(new_pop, ranges)
 
 		#determine best and average of population and save it:
 		evolution = np.append(evolution, pop[np.argmin(pop[:,-1]),:], axis=0)

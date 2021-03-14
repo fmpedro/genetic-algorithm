@@ -21,4 +21,4 @@ The value of the variable i for Offspring_2 = (1-b) * i(father) + b * i(mother).
 
 
 ### Mutation:
-The mutation is a random change of some of the variables values that is made in order to encourage diversity in the genetic material, avoinding local values and openning the possibility to explore different solutions. This is controled through a mutation rate factor, which is tipically set low, that determines how many variables in the population will subjected to random change.
+The mutation is a random change of the values on some of the variables of some of the elements. This is done in order to encourage diversity in the genetic material, avoinding local values and openning the possibility to explore different solutions. This is controled through a mutation rate factor, which is tipically set low, that determines how many values in the population will be subjected to random change.
